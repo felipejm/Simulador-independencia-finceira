@@ -11,18 +11,19 @@ block content
             label.field-label
               span.fa.fa-th-large.icon-orange
               | Estratégia de position sizing 
-            select#position-sizing-strategy.form-control(name='position-strategy')
+            select#position-sizing-strategy.form-control(name='position-strategy', onchange="showHidePositionSizing(this)")
               option Porcentual de risco
               option Blocos
         
-          .form-group
+          #risk-field.form-group
             label.field-label
               span.fa.fa-percentage.icon-orange
-              | Porcentabem de risco      
+              | Porcentagem de risco      
             .input-group
               input.form-control(name='risk-percent', type='text', placeholder='Ex. 10, 20...', aria-label='Username', aria-describedby='basic-addon1')
               .input-group-append
                 span#basic-addon1.input-group-text %
+          #blocks-field.form-group.display-none
             label.field-label
               span.fa.fa-dice-d6.icon-orange
               | Quantidade blocos     
@@ -74,19 +75,53 @@ block content
             .form-group.display-flex
               span.margin-15px
                 |Inicio:
-              select#period-start.form-control.width-auto
+              select#period-start.form-control.width-auto(name="period-start")
                 option 2000
                 option 2001
                 option 2002
+                option 2003
+                option 2004
+                option 2005
+                option 2006
+                option 2007
+                option 2008
+                option 2008
+                option 2009
+                option 2010
+                option 2011
+                option 2012
+                option 2013
+                option 2014
+                option 2015
+                option 2016
+                option 2017
+                option 2018
               span.margin-15px
                 |Fim: 
-              select#period-start.form-control.width-auto
+              select#period-end.form-control.width-auto(name="period-end")
                 option 2000
                 option 2001
                 option 2002
+                option 2003
+                option 2004
+                option 2005
+                option 2006
+                option 2007
+                option 2008
+                option 2008
+                option 2009
+                option 2010
+                option 2011
+                option 2012
+                option 2013
+                option 2014
+                option 2015
+                option 2016
+                option 2017
+                option 2018
 
       .card
-        .card-body
+        .card-body.overflow-allow
           .form-group
             label.field-label
               span.fa.fa-chart-line.icon-orange

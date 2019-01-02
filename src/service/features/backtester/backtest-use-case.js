@@ -3,23 +3,25 @@ import { DonchianStrategy } from './strategy/buy-sell-strategy/donchian-strategy
 import { BlockPositionSizing } from './strategy/position-sizing-strategy/block-position-sizing'
 import { PositionSizingByRisk } from './strategy/position-sizing-strategy/position-sizing-by-risk'
 import { Portfolio } from './model/portfolio';
+import {BacktestOptions} from './model/backtest-configuration'
 
 export class BacktestUseCase{
 
     async run(request){
-        console.log()
+        let options = {
+            capital: request.query['capital-amount'],
+            stocks: request.query['stocks'].split(','),
+            allowDaytrade: request.query['allow-daytrade'] ? true : false,
+            periodStart: request.query['period-start'],
+            periodEnd: request.query['period-end'],
+            onlySharesMultipleOf100: true
+        }
+        this.options = Object.assign(BacktestOptions, options)
 
-        let strategy = this.configureStrategy(request)
-        const capitalParam = request.query['capital-amount']
-        const allowDaytradeParam = request.query['allow-daytrade'] ? true : false
-        const stocksParam = request.query['stocks'].split(',')
-
-        const options = {allowDaytrade: allowDaytradeParam}
-        const portfolio = new Portfolio(capitalParam)
+        const strategy = this.configureStrategy(request)
+        const portfolio = new Portfolio(options.capital)
         const positionSizing =  this.configurePositionSizingStrategy(request, portfolio, options)
-
-        const backtester = new Backtester(strategy, positionSizing, portfolio, 
-            stocksParam, options)
+        const backtester = new Backtester(strategy, positionSizing, portfolio, options)
         
         return backtester.start()
     }
@@ -43,6 +45,7 @@ export class BacktestUseCase{
     configureStrategy(request){
         let strategy = null
         const strategyParam = request.query['strategy']
+
         if(strategyParam && strategyParam === 'Donchian channels'){
             const topChannel = request.query['donchian-top-channel']
             const bottomChannel = request.query['donchian-bottom-channel']

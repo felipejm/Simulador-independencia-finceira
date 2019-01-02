@@ -86,6 +86,19 @@ form{
     padding-right: 18px !important;
     overflow: scroll;
 }
+
+.display-none{
+    display: none !important;
+}
+
+.display-visible{
+    display: visible !important;
+}
+
+.overflow-allow{
+    overflow: visible !important;
+}
+
 .card-title{
     font-size: 20px;
 }

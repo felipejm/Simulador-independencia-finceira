@@ -1,5 +1,4 @@
 import { PositionSizing } from "./position-sizing";
-
 export class BlockPositionSizing extends PositionSizing{
 
     constructor(portfolio, numBlocks, options){
@@ -20,9 +19,6 @@ export class BlockPositionSizing extends PositionSizing{
                     amountToBuy = this.toMultipleOfHundred(amountToBuy)
                 }
 
-                console.log("2-"+amountToBuy)
-                console.log("3-"+block.shares)
-                console.log("4-"+block.capitalRemaining)
                 if(amountToBuy > 0){
                     block.shares += amountToBuy
                     block.capitalRemaining = block.capitalRemaining - (amountToBuy * stock.price)
@@ -39,8 +35,6 @@ export class BlockPositionSizing extends PositionSizing{
             if(amountToBuy > 0){
                 this.capital -= capitalToBlock
                 const capitalRemaining = capitalToBlock - (amountToBuy * stock.price)
-                console.log("1-"+capitalToBlock)
-                console.log("1-"+capitalRemaining)
                 this.blocks.push(new Block(stock.code, amountToBuy, capitalRemaining))
             }
         }
@@ -53,7 +47,7 @@ export class BlockPositionSizing extends PositionSizing{
         const block = this.getBlock(stock.code)
         if(block){
             amountToSell = block.shares
-            this.capital = block.shares * stock.price
+            this.capital += block.shares * stock.price + block.capitalRemaining
             this.removeBlock(stock.code)
         }
         return amountToSell

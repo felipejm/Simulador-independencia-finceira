@@ -1,6 +1,6 @@
 import { Backtester } from './service/features/backtester/backtester'
 import { DonchianStrategy } from './service/features/backtester/strategy/buy-sell-strategy/donchian-strategy'
-import { SimplePositionSizing } from './service/features/backtester/strategy/position-sizing-strategy/SimplePositionSizing'
+import { PositionSizingByRisk } from './service/features/backtester/strategy/position-sizing-strategy/position-sizing-by-risk'
 import { Portfolio } from './service/features/backtester/model/portfolio';
 import { StockHistoryDAO } from './service/features/backtester/model/stock/dao/stock-history-dao'
 

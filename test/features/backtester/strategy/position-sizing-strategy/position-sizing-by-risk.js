@@ -1,6 +1,6 @@
 import { PositionSizingByRisk } from "../../../../../src/service/features/backtester/strategy/position-sizing-strategy/position-sizing-by-risk"
 import { Portfolio } from "../../../../../src/service/features/backtester/model/portfolio"
-import { Stock } from "../../../../../src/service/features/backtester/model/stock/stock"
+import { Stock } from "../../../../../src/service/features/stocks/model/stock"
 
 const assert = require('assert');
 

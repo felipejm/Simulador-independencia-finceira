@@ -1,24 +1,27 @@
-import {Stock} from './model/stock/stock'
+import {Stock} from '../stocks/model/stock'
 import {Strategy} from './strategy/buy-sell-strategy/strategy'
 import {BacktestResult} from './model/backtest-result'
-import {StockHistoryDAO} from './model/stock/dao/stock-history-dao'
-import {BacktestOptions} from './model/backtest-configuration'
-
+import {StockHistoryDAO} from '../stocks/model/dao/stock-history-dao'
 export class Backtester{
     stockDao = new StockHistoryDAO()
     
-    constructor(strategy, positionSizingStrategy, portfolio, stocksCodes, options){
+    constructor(strategy, positionSizingStrategy, 
+                portfolio, options){
         this.strategy = strategy
         this.portfolio = portfolio
         this.positionSizingStrategy = positionSizingStrategy
-        this.stocksCodes = stocksCodes
-        this.options = options ? options : BacktestOptions
+        this.stocksCodes = options.stocks
+        this.options = options
         this.result = new BacktestResult()
     }
     
     async start(){
-        let stockHistories = await this.stockDao.fetchByCodes(this.stocksCodes)
+        let stockHistories = await this.stockDao.fetchByCodes(this.stocksCodes, 
+                                                                this.options.periodStart, 
+                                                                this.options.periodEnd)
         this.result.InicialCapitalAmount = this.portfolio.amountMoney
+        this.result.periodStart = this.options.periodStart
+        this.result.periodEnd = this.options.periodEnd
         
         if(stockHistories && stockHistories.lenght > 0){
             this.result.addCapitalChange(this.portfolio.amountMoney, stockHistories[0].date)
@@ -28,7 +31,7 @@ export class Backtester{
             this.simulateMarketDay(stockHistory,stockHistories, index)
         });
         
-        this.result.finalCapitalAmount = this.portfolio.amountMoney
+        this.result.finalCapitalAmount = this.getEstimatedMoneyOfPortfolio(stockHistories)
         return this.result
     }
 
@@ -91,15 +94,13 @@ export class Backtester{
         return previousStockHistories
     }
     
-    async getEstimatedMoneyOfPortfolio(){
-        let totalMoneyAmount = 0
-        let stockHistories = await this.stockDao.fetchByCodes(this.stocksCodes)
-
+    getEstimatedMoneyOfPortfolio(stockHistories){
+        let totalMoneyInStocks = 0
         this.portfolio.portfolioStocks.forEach(portoflioStock => {
             const stockHistory = stockHistories.filter(element => portoflioStock.code == element.code )
             const lastHistory = [...stockHistory].pop();
-            totalMoneyAmount += portoflioStock.quantity * lastHistory.close
+            totalMoneyInStocks += portoflioStock.quantity * lastHistory.close
         })
-        return totalMoneyAmount
+        return totalMoneyInStocks + this.portfolio.amountMoney
     }
 }

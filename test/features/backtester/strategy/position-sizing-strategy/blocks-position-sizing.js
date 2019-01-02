@@ -1,6 +1,6 @@
 import { BlockPositionSizing } from "../../../../../src/service/features/backtester/strategy/position-sizing-strategy/block-position-sizing"
 import { Portfolio } from "../../../../../src/service/features/backtester/model/portfolio"
-import { Stock } from "../../../../../src/service/features/backtester/model/stock/stock"
+import { Stock } from "../../../../../src/service/features/stocks/model/stock"
 
 const assert = require('assert');
 
@@ -120,16 +120,37 @@ describe('Sell Operation', function() {
     const portfolio = new Portfolio(10000)
     const strategy = new BlockPositionSizing(portfolio, 2, {onlySharesMultipleOf100: true})
     const azulStock = new Stock("AZUL4", 20)
+
+    //Then
     strategy.verifyAmountToBuy(azulStock)
     assert.equal(strategy.blocks.length, 1)
     assert.equal(strategy.blocks[0].shares, 200)
-
-    //Then
     const amountToSell = strategy.verifyAmountToSell(azulStock)
 
     //Should
     assert.equal(amountToSell, 200)
     assert.equal(strategy.blocks.length, 0)
+  })
+
+  it('should increase capital remainig', function() {
+    //Given
+    const portfolio = new Portfolio(10000)
+    const strategy = new BlockPositionSizing(portfolio, 2, {onlySharesMultipleOf100: true})
+    const azulStock = new Stock("AZUL4", 20)
+
+    //Then
+    assert.equal(strategy.capital, 10000)
+    strategy.verifyAmountToBuy(azulStock) 
+    
+    // Free capital = 5000, Block azul4 capital; = 1000
+    assert.equal(strategy.capital, 5000)
+    assert.equal(strategy.blocks[0].capitalRemaining, 1000) 
+
+    const amountToSell = strategy.verifyAmountToSell(azulStock)
+
+    //Should
+    assert.equal(strategy.capital, 10000)
+    assert.equal(strategy.blocks.length, 0) 
   })
 })
 

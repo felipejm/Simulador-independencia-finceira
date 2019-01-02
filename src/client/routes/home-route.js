@@ -1,5 +1,6 @@
 const express = require('express');
 import { BacktestUseCase } from '../../service/features/backtester/backtest-use-case'
+import { AutoCompleteStockUseCase } from '../../service/features/stocks/autocomplete-stock-use-case'
 
 export class HomeRoute{
 
@@ -14,6 +15,13 @@ export class HomeRoute{
             const useCase = new BacktestUseCase()
             useCase.run(request).then(result => {
                 response.render('home/result', {result: result});
+            })
+        }))
+
+        app.use('/stocks', router.get('/stocks', function(request, response) {
+            const useCase = new AutoCompleteStockUseCase()
+            useCase.run(request).then(result => {
+                response.send(result)
             })
         }))
     }

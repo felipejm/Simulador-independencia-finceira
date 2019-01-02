@@ -1,3 +1,5 @@
+var dateFormat = require('dateformat');
+
 export class BacktestResult{
 
     formatter = new Intl.NumberFormat('en-US', {
@@ -11,10 +13,16 @@ export class BacktestResult{
         this.operations = []
         this.finalCapitalAmount = 0
         this.InicialCapitalAmount = 0
+        this.periodStart = 0
+        this.periodEnd = 0
     }
 
     addCapitalChange(capital, date){
         this.capitalByDate[date] = capital
+    }
+
+    getPeriod(){
+        return "01/01/"+this.periodStart + " à " + "31/12/"+this.periodEnd
     }
 
     getInicialCapital(){
@@ -26,11 +34,11 @@ export class BacktestResult{
     }
 
     logSellOperation(stock, amount, priceOfTransaction){
-        this.operations.push(new Operation("Short",stock.code, priceOfTransaction, amount, stock.date))
+        this.operations.push(new Operation("Short",stock.code,stock.price, priceOfTransaction, amount, stock.date))
     }
 
     logBuyOperation(stock, amount, priceOfTransaction){
-        this.operations.push(new Operation("Long",stock.code, priceOfTransaction, amount, stock.date))
+        this.operations.push(new Operation("Long",stock.code,stock.price, priceOfTransaction, amount, stock.date))
     }
 
     isPercentageCapitalPositive(){
@@ -63,11 +71,12 @@ class Operation{
         minimumFractionDigits: 0
     })
 
-    constructor(typeOperation, code, price, amount, date){
+    constructor(typeOperation, code, stockPrice, priceOfTransaction, amount, date){
         this.typeOperation = typeOperation
         this.code = code
-        this.price = this.currencyFormatter.format(price)
+        this.stockPrice = this.currencyFormatter.format(stockPrice)
+        this.priceOfTransaction = this.currencyFormatter.format(priceOfTransaction)
         this.amount = this.formatter.format(amount)
-        this.date = date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getFullYear()
+        this.date = dateFormat(date, "dd/mm/yyyy")
     }
 }

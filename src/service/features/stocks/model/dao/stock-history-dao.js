@@ -18,8 +18,12 @@ export class StockHistoryDAO{
         this.stockhistoryModel = mongoose.model("stock_history", StockHistory, "history")
     }
 
-    async fetchByCodes(codes){
-        return this.stockhistoryModel.find({}).where("code").in(codes).sort({date: 'asc'})
+    async fetchByCodes(codes, startYear, endYear){
+        return this.stockhistoryModel
+        .find({})
+        .where("code").in(codes)
+        .where("date").gte(new Date(startYear, 0, 1)).lte(new Date(endYear, 11, 31))
+        .sort({date: 'asc'})
     }
 
     async downloadCotacoes(){
@@ -34,6 +38,8 @@ export class StockHistoryDAO{
                 if(body && body.length > 0){
                     return this.convertCsvToJson(body, symbol)
                 }
+
+                console.log(symbol+ "has no quotes")
                 callback()
             }).then(stockHistories => {
                 console.log("Saving "+symbol+" quotes")

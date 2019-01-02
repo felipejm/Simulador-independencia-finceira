@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import {StockSymbol} from '../model/stock-symbol'
+import {StockSymbol} from '../stock-symbol'
 
 require('dotenv').config()
 
@@ -15,6 +15,11 @@ export class StockSymbolDAO{
 
     constructor(){
         this.stockSymbolModel = mongoose.model("stock_symbol", StockSymbol, "symbols")
+    }
+
+    fetchByQuery(query){
+        console.log(query)
+        return this.stockSymbolModel.find({code:new RegExp(query, 'i')}, "code")
     }
 
     dumpListCodes(){  

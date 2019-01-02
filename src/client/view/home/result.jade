@@ -9,7 +9,7 @@ block content
         .row
           label.field-label
               span.fa.fa-dollar-sign.icon-orange
-              | Capital inicial: 
+              | Investimento inicial: 
           label.field-label.fit-content.result-field-inline
             | #{result.getInicialCapital()}
         .row
@@ -18,8 +18,14 @@ block content
               | Capital final: 
           label.field-label.fit-content.result-field-inline
             |#{result.getFinalCapital()}  
-          span.field-label.fit-content(class=result.isPercentageCapitalPositive() ? 'positve':'negative')
+          span.field-label.fit-content(class=result.isPercentageCapitalPositive() ? 'positive':'negative')
             |(#{result.getPercentageCapital()}%)
+        .row
+          label.field-label
+              span.fa.fa-dollar-sign.icon-orange
+              | Período: 
+          label.field-label.fit-content.result-field-inline
+            | #{result.getPeriod()}
 
     .card
       .card-body
@@ -28,18 +34,23 @@ block content
           thead
             tr
               th Data
-              th Symbol
-              th Preço
-              th Shares
+              th Ação
+              th Qnt
+              th Preço da ação 
+              th Preço da transação
               th Trade
           tbody
             each operation in result.operations
               tr
                 td= operation.date
                 td= operation.code
-                td= operation.price
                 td= operation.amount
-                td= operation.typeOperation
+                td(class=operation.typeOperation === 'Long' ? 'positive' : 'negative')
+                  | #{operation.stockPrice}
+                td(class=operation.typeOperation === 'Long' ? 'positive' : 'negative')
+                  | #{operation.priceOfTransaction}
+                td(class=operation.typeOperation === 'Long' ? 'positive' : 'negative')
+                  | #{operation.typeOperation}
             
   script.
-    $('#result-table').DataTable({ordering: true, info: false, searching: false});
+    $('#result-table').DataTable({ordering: false, info: false, searching: false});
