@@ -1,0 +1,45 @@
+extends ../layout
+
+block content
+  .container-result
+    span.title Resultado
+
+    .card
+      .card-body
+        .row
+          label.field-label
+              span.fa.fa-dollar-sign.icon-orange
+              | Capital inicial: 
+          label.field-label.fit-content.result-field-inline
+            | #{result.getInicialCapital()}
+        .row
+          label.field-label
+              span.fa.fa-dollar-sign.icon-orange
+              | Capital final: 
+          label.field-label.fit-content.result-field-inline
+            |#{result.getFinalCapital()}  
+          span.field-label.fit-content(class=result.isPercentageCapitalPositive() ? 'positve':'negative')
+            |(#{result.getPercentageCapital()}%)
+
+    .card
+      .card-body
+        
+        table#result-table.table.table-striped.table-bordered(style='width:100%')
+          thead
+            tr
+              th Data
+              th Symbol
+              th Preço
+              th Shares
+              th Trade
+          tbody
+            each operation in result.operations
+              tr
+                td= operation.date
+                td= operation.code
+                td= operation.price
+                td= operation.amount
+                td= operation.typeOperation
+            
+  script.
+    $('#result-table').DataTable({ordering: true, info: false, searching: false});

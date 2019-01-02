@@ -1,0 +1,100 @@
+extends ../layout
+
+block content
+  .container
+    span.title-black Simulador 
+    span.title Independencia financeira!
+    form#form-backtester(action='/run-backtest', method='get')
+      .card
+        .card-body
+          .form-group
+            label.field-label
+              span.fa.fa-th-large.icon-orange
+              | Estratégia de position sizing 
+            select#position-sizing-strategy.form-control(name='position-strategy')
+              option Porcentual de risco
+              option Blocos
+        
+          .form-group
+            label.field-label
+              span.fa.fa-percentage.icon-orange
+              | Porcentabem de risco      
+            .input-group
+              input.form-control(name='risk-percent', type='text', placeholder='Ex. 10, 20...', aria-label='Username', aria-describedby='basic-addon1')
+              .input-group-append
+                span#basic-addon1.input-group-text %
+            label.field-label
+              span.fa.fa-dice-d6.icon-orange
+              | Quantidade blocos     
+            .input-group
+              input.form-control(name='number-blocks', type='text', placeholder='Ex. 10, 20...', aria-label='Username', aria-describedby='basic-addon1')
+              .input-group-append
+                span#basic-addon1.input-group-text %
+      
+      .card
+        .card-body
+          .form-group
+            label.field-label
+              span.fa.fa-chart-line.icon-orange
+              |Estratégia
+            select#position-sizing-strategy.form-control(name='strategy')
+              option Donchian channels
+          .form-group
+            label.field-label
+              span.fa.fa-caret-up.icon-orange
+              | Top channel
+            .input-group
+              input.form-control(name='donchian-top-channel', type='text', placeholder='20, 30, 90...', aria-label='Username', aria-describedby='basic-addon1')
+          .form-group
+            label.field-label
+              span.fa.fa-caret-down.icon-orange
+              | Bottom channel
+            .input-group
+              input.form-control(name='donchian-bottom-channel',type='text', placeholder='20, 30, 90...', aria-label='Username', aria-describedby='basic-addon1')
+      
+      .card
+        .card-body
+          .form-group
+            label.field-label
+              span.fa.fa-dollar-sign.icon-orange
+              | Capital inicial
+            .input-group
+              .input-group-prepend
+                span#basic-addon1.input-group-text R$
+              input.form-control(name='capital-amount',type='text', placeholder='Ex. 100000', aria-label='Username', aria-describedby='basic-addon1')
+          
+          .form-group.form-check
+            input#allowdaytrade.form-check-input(name='allow-daytrade',type='checkbox')
+            label.form-check-label(for='allowdaytrade')
+              | Permitir daytrade
+          .form-group
+            label.field-label
+              span.fa.fa-chart-line.icon-orange
+              |Período
+            .form-group.display-flex
+              span.margin-15px
+                |Inicio:
+              select#period-start.form-control.width-auto
+                option 2000
+                option 2001
+                option 2002
+              span.margin-15px
+                |Fim: 
+              select#period-start.form-control.width-auto
+                option 2000
+                option 2001
+                option 2002
+
+      .card
+        .card-body
+          .form-group
+            label.field-label
+              span.fa.fa-chart-line.icon-orange
+              |Açoes
+            input#input-stocks(type="text", name="stocks")
+            
+      button.button-execute.btn.btn-primary.pull-right(type='submit') 
+        span.fas.fa-bolt.fa-fw.icon
+        | Executar
+    #result-ajax
+
