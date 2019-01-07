@@ -47,3 +47,16 @@ function showHidePositionSizing(elem){
         $('#risk-field').addClass('display-none')
     }
 }
+
+function loadChart(symbol, periodStart, periodEnd){
+    $.ajax({
+        type: 'GET',
+        url: '/operation-detail',
+        data: {
+            symbol: symbol,
+            periodStart: periodStart,
+            periodEnd: periodEnd,
+        },
+        success: function(data){ $('#result-ajax').html(data) }
+        });
+}

@@ -25,6 +25,14 @@ export class BacktestResult{
         return "01/01/"+this.periodStart + " à " + "31/12/"+this.periodEnd
     }
 
+    getPeriodStart(){
+        return this.periodStart
+    }
+
+    getPeriodEnd(){
+        return this.periodEnd
+    }
+
     getInicialCapital(){
         return this.formatter.format(this.InicialCapitalAmount)
     }

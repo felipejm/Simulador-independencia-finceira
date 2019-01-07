@@ -29,10 +29,10 @@ block content
 
     .card
       .card-body
-        
         table#result-table.table.table-striped.table-bordered(style='width:100%')
           thead
             tr
+              th 
               th Data
               th Ação
               th Qnt
@@ -42,7 +42,11 @@ block content
           tbody
             each operation in result.operations
               tr
-                td= operation.date
+                td(style="width: 4%;")
+                  a(onclick="javascript:loadChart('#{operation.code}', #{ result.getPeriodStart()}, #{result.getPeriodEnd()})")
+                    span.fa.fa-search-dollar.icon-orange-big
+                td(style="width: 10%;")
+                  | #{operation.date}
                 td= operation.code
                 td= operation.amount
                 td(class=operation.typeOperation === 'Long' ? 'positive' : 'negative')
@@ -51,6 +55,8 @@ block content
                   | #{operation.priceOfTransaction}
                 td(class=operation.typeOperation === 'Long' ? 'positive' : 'negative')
                   | #{operation.typeOperation}
-            
+  #result-ajax
+
   script.
-    $('#result-table').DataTable({ordering: false, info: false, searching: false});
+    $('#result-table').DataTable({ordering: false, searching: false});
+

@@ -10,6 +10,15 @@ body{
     font-size: 24px;
 }
 
+.modal-dialog{
+    max-width: 900px !important;
+}
+
+#result-chart{
+    height: 500px !important;
+}
+
+
 .title{
     color:#dc3545;
     font-size: 24px;
@@ -48,6 +57,11 @@ form{
     color: #dc3545;
 }
 
+.icon-orange-big{
+    font-size: 1em;
+    color: #dc3545;
+}
+
 .icon{
     font-size: 0.9em;
     margin-right: 5px;
@@ -57,6 +71,7 @@ form{
     margin-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 10px;
 }
 .result-field-inline{
     display: inline !important;

@@ -24,5 +24,9 @@ export class HomeRoute{
                 response.send(result)
             })
         }))
+
+        app.use('/operation-detail', router.get('/operation-detail', function(request, response) {
+            response.render('home/result-modal')
+        }))
     }
 }
