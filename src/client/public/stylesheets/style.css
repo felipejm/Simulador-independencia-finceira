@@ -62,6 +62,18 @@ form{
     color: #dc3545;
 }
 
+.modal-small{
+    width: 31% !important;
+    padding: 15px;
+}
+
+.modal-small > .modal-content{
+    padding: 15px;
+}
+.modal-small > .modal-content > a{
+    color: #dc3545;
+    text-align: center;
+}
 .icon{
     font-size: 0.9em;
     margin-right: 5px;

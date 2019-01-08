@@ -14,6 +14,12 @@ export class BacktestUseCase{
             allowDaytrade: request.query['allow-daytrade'] ? true : false,
             periodStart: request.query['period-start'],
             periodEnd: request.query['period-end'],
+            position_strategy: request.query['position-strategy'],
+            strategy: request.query['strategy'],
+            risk_percent: request.query['risk-percent'],
+            number_blocks: request.query['number-blocks'],
+            donchian_top_channel: request.query['donchian-top-channel'],
+            donchian_bottom_channel: request.query['donchian-bottom-channel'],
             onlySharesMultipleOf100: true
         }
         this.options = Object.assign(BacktestOptions, options)

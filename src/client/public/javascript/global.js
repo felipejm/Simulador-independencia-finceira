@@ -20,6 +20,18 @@ $('#input-stocks').selectize({
     }
 });
 
+function generateLink(){
+    var form = $('#form-backtester');
+    var url = form.attr('action');
+
+    $.ajax({
+        type: form.attr('method'),
+        url: "/generate-link",
+        data: form.serialize(),
+        success: function(data){ $('#result-ajax').html(data) }
+        });
+}
+
 function submitForm(){
     var form = $('#form-backtester');
     var url = form.attr('action');

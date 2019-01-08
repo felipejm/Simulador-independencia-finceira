@@ -1,0 +1,14 @@
+#modal-result.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+  .modal-dialog.modal-small
+    .modal-content.center-block
+      label.field-label
+        | O resultado ficará diponível no link abaixo em breve.
+      a(href='#{result.link}')
+        span.fa.fa-link.icon-orange
+        | Link
+
+script.
+  $('#modal-result').modal('show');
+  
+    
+  

@@ -1,4 +1,5 @@
 const express = require('express');
+import { BacktestCreateResultKeyUseCase } from '../../service/features/backtester/backtest-create-result-key-use-case'
 import { BacktestUseCase } from '../../service/features/backtester/backtest-use-case'
 import { AutoCompleteStockUseCase } from '../../service/features/stocks/autocomplete-stock-use-case'
 
@@ -22,6 +23,13 @@ export class HomeRoute{
             const useCase = new AutoCompleteStockUseCase()
             useCase.run(request).then(result => {
                 response.send(result)
+            })
+        }))
+
+        app.use('/generate-link', router.get('/generate-link', function(request, response) {
+            const useCase = new BacktestCreateResultKeyUseCase()
+            useCase.run(request).then(result => {
+                response.render('home/result-link-modal', {result: result})
             })
         }))
 

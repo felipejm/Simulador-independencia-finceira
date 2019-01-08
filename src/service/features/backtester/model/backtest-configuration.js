@@ -1,6 +1,6 @@
 export let BacktestOptions = {
     capital: 10000,
-    stocksParam: [],
+    stocks: [],
     periodStart: 2000,
     periodEnd: 2005,
     allowDaytrade: false,
