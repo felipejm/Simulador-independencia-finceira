@@ -19,5 +19,5 @@ class Main{
 }
 
 //new StockSymbolDAO().downloadCotacoes()
-new StockHistoryDAO().downloadCotacoes()
+//new StockHistoryDAO().downloadCotacoes()
 //new Main().runBacktest()
