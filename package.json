@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha ./test/**/*.js --compilers js:babel-core/register",
     "start-index": "babel-node --presets env,stage-2 src/index.js",
-    "start": "nodemon --max-old-space-size=4096 --exec babel-node --presets env,stage-2 src/app.js"
+    "start-nodemon": "nodemon --max-old-space-size=4096 --exec babel-node --presets env,stage-2 src/app.js",
+    "start": "babel-node --presets env,stage-2 src/app.js"
   },
   "keywords": [],
   "author": "",
